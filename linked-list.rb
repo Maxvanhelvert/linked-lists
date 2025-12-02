@@ -4,28 +4,31 @@ class LinkedList
   attr_accessor :name
 
   def initialize
-    @head = Node.new(nil)
-    @tail = Node.new(nil)
+    @head = Node.new
+    @tail = Node.new
   end
 
   def prepend(value)
+    node = Node.new
+    node.value = value
     if @head.nil?
-      @head = value
-      @tail = value
+      @head = node
+      @tail = node
     else 
-      value.next_node = @head
-      @head = value
+      node.next_node = @head
+      @head = node
     end
   end
 
   def append(value)
-    value = Node.new(value)
-    if @head.nil?
-      @head = value
-      @tail = value
+    node = Node.new
+    node.value = value
+    if @head.value.nil?
+      @head = node
+      @tail = node
     else 
-      @tail.next_node = value
-      @tail = value
+      @tail.next_node = node
+      @tail = node
     end
   end
 
@@ -39,5 +42,25 @@ class LinkedList
     end
 
     count
+  end
+
+  def head
+    @head.value
+  end
+
+  def tail
+    @tail.value
+  end
+
+  def at(index)
+    count = 0
+    current = @head
+
+    while count < index
+      count += 1
+      current = current.next_node
+    end
+
+    current.value
   end
 end

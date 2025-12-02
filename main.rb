@@ -9,4 +9,7 @@ list.append('hamster')
 list.append('snake')
 list.append('turtle')
 
-puts list.size
+p list.size
+p list.head
+p list.tail
+p list.at(2)
