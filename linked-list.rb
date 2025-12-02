@@ -63,4 +63,37 @@ class LinkedList
 
     current.value
   end
+
+  def pop
+    nil if @head.nil?
+    
+    prev2 = @head
+    prev = prev2.next_node
+    current = prev.next_node
+
+    while !current.nil?
+      prev2 = prev
+      prev = current
+      current = current.next_node
+    end
+
+    data = prev.value
+    prev2.next_node = nil
+    @tail = prev2
+    data
+  end
+
+  def to_s
+    string = ''
+    current = @head
+
+    while !current.nil?
+      string << "( #{current.value} ) -> "
+      current = current.next_node
+    end
+
+    string << "nil"
+
+    string
+  end
 end
