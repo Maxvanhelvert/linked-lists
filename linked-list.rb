@@ -68,50 +68,53 @@ class LinkedList
 
   def pop
     return nil if @head.nil?
-    
-    prev2 = @head
-    prev = prev2.next_node
-    current = prev.next_node
+    if @head.next_node.nil?
+      del_node = @head
+      @head = nil
+      @tail = nil
+      del_node.value
+    else
+      current = @head
 
-    while !current.nil?
-      prev2 = prev
-      prev = current
-      current = current.next_node
+      while current.next_node != @tail 
+        current = current.next_node
+      end
+      
+      del_node = @tail
+      current.next_node = nil
+      @tail = current
+
+      del_node.value
     end
-
-    data = prev.value
-    prev2.next_node = nil
-    @tail = prev2
-    data
   end
 
   def contains(value)
     current = @head
 
-    while current.value != value
+    while current
+      return true if current == value
       current = current.next_node
-
-      break if current.next_node.nil?
     end
 
-    current.value == value ? true : false
+    false
   end
 
   def find(value)
     current = @head
     index = 0
 
-    while !current.nil?
-      break if current.value == value
+    while current
+      return index if current.value == value
 
       current = current.next_node
       index += 1
     end
 
-    index unless current.nil?
+    nil
   end
 
   def to_s
+    return nil if @head.nil?
     string = ''
     current = @head
 
@@ -146,7 +149,16 @@ class LinkedList
   end
 
   def remove_at(index)
-    self.pop if index >= self.size
+    return nil if @head.nil? || @head.next_node.nil?
+    return self.pop if index == self.size - 1
+    return nil if index >= self.size
+
+    if index == 0 
+      del_node = @head
+      @head = @head.next_node
+      @tail = nil if @head.nil?
+      return del_node.value
+    end
 
     current = @head
     count = 0
